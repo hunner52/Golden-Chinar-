@@ -10,7 +10,7 @@ import Manufacturing from '@/components/sections/Manufacturing';
 import PrivateLabel from '@/components/sections/PrivateLabel';
 import Quality from '@/components/sections/Quality';
 import Stats from '@/components/sections/Stats';
-import Clients from '@/components/sections/Clients';
+
 import Contact from '@/components/sections/Contact';
 
 export default function HomePage() {
@@ -28,7 +28,7 @@ export default function HomePage() {
         <PrivateLabel />
         <Quality />
         <Stats />
-        <Clients />
+
         <Contact />
       </main>
       <Footer />
