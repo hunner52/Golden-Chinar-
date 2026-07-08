@@ -2,73 +2,93 @@
 import { useEffect, useRef } from 'react';
 
 const milestones = [
-  { year: '1992', title: 'Founded with Honour', desc: 'Col. Sansar Singh, Vir Chakra (Retd.) founds Jai Vaishno Oil Mills under SEMFEX after 30 years of distinguished military service.' },
-  { year: '2000s', title: 'Scaling Up', desc: 'Plant expands to 100 MT crushing capacity. 166 cold-press Kohul machines commissioned for authentic Kachi Ghani extraction.' },
-  { year: '2010s', title: 'AGMARK Certified', desc: 'Awarded AGMARK Grade 1 — India\'s highest mustard oil certification. In-house GLC lab and NIR Analyser installed.' },
-  { year: '2015', title: 'Patanjali Partnership', desc: 'Become exclusive manufacturer for Patanjali Ayurved. 200ml & 500ml packed solely by us — not even at Patanjali\'s own plant.' },
-  { year: '2020s', title: 'Enterprise Scale', desc: 'Trusted by Louis Dreyfus (Netherlands), Modicare (KK Modi Group), Dalmia Bharat Sugar, and Aastha Channel.' },
-  { year: 'Today', title: 'Manufacturing Excellence', desc: '100 TPD packing, 500 MT storage, 8 automated lines — a manufacturing powerhouse in India\'s mustard heartland.' },
+  { year: '1992', title: 'Founded with Honour', desc: 'Col. Sansar Singh, Vir Chakra (Retd.) establishes Jai Vaishno Oil Mills under SEMFEX — channelling 30 years of military discipline into a mustard oil legacy.' },
+  { year: '2000s', title: 'Scaling the Plant', desc: 'Capacity grows to 100 MT crushing per day. 166 cold-press Kohul machines installed for authentic Kachi Ghani extraction at industrial scale.' },
+  { year: '2010s', title: 'AGMARK Grade 1', desc: "India's highest mustard oil certification awarded. In-house GLC lab and NIR Analyser commissioned for world-class quality control." },
+  { year: '2015', title: 'Patanjali Partnership', desc: 'Become exclusive manufacturer for Patanjali Ayurved. 200ml & 500ml packed solely by us — not even at their own plant.' },
+  { year: '2020s', title: 'Global Clients', desc: 'Trusted by Louis Dreyfus Company (Netherlands), Modicare, Dalmia Bharat Sugar and Aastha Channel.' },
+  { year: 'Today', title: '100 TPD & Growing', desc: '8 automated packing lines, 500 MT oil storage, 125% power backup — a manufacturing powerhouse in India\'s mustard heartland.' },
 ];
 
 export default function Legacy() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.reveal').forEach((el, i) => {
-            setTimeout(() => el.classList.add('visible'), i * 120);
-          });
-        }
-      });
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * 100)); });
     }, { threshold: 0.05 });
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="section-label reveal mb-3">Our Legacy</span>
-          <div className="red-divider mx-auto mb-5 reveal reveal-delay-1" />
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-charcoal leading-tight reveal reveal-delay-1">
-            A Story Born From <span className="text-[#C41E1E]">Valour.</span>
-          </h2>
-          <p className="text-charcoal/60 text-lg font-inter mt-5 leading-relaxed reveal reveal-delay-2">
-            Founded by a Vir Chakra decorated war hero. Built with military-grade discipline and a manufacturer's obsession for purity.
-          </p>
+    <section id="about" ref={ref} className="section-pad bg-white">
+      <div className="container">
+        {/* Split header */}
+        <div className="grid lg:grid-cols-2 gap-16 items-end mb-20">
+          <div>
+            <div className="eyebrow reveal mb-5">Our Legacy</div>
+            <h2 className="heading-xl text-gray-900 reveal reveal-delay-1">
+              A Story Born<br />From <span className="text-red-shine">Valour.</span>
+            </h2>
+          </div>
+          <div className="reveal reveal-delay-2">
+            <p className="text-gray-500 text-lg leading-relaxed mb-6">
+              Founded by a Vir Chakra decorated war hero. Built with military-grade discipline. Scaled by an uncompromising obsession for purity. This is the story of Golden Chinar.
+            </p>
+            <div className="flex items-center gap-4 text-sm text-gray-400">
+              <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-red-700" /><span>Khairthal, Rajasthan</span></div>
+              <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-amber-500" /><span>RIICO Industrial Area</span></div>
+            </div>
+          </div>
         </div>
 
-        {/* Founder card */}
-        <div className="bg-[#C41E1E] rounded-2xl p-8 md:p-10 mb-16 reveal max-w-3xl mx-auto text-white">
-          <div className="flex items-start gap-5">
-            <div className="flex-shrink-0 w-1 self-stretch bg-[#F5C518] rounded-full" />
-            <div>
-              <span className="text-[#F5C518] text-xs font-inter tracking-[0.3em] uppercase font-semibold">Founder</span>
-              <h3 className="font-playfair text-2xl font-bold mt-1 mb-3">
-                Col. Sansar Singh, <span className="text-[#F5C518]">Vir Chakra</span> (Retd.)
+        {/* Founder callout — full width, stunning */}
+        <div className="reveal-scale mb-20 rounded-3xl overflow-hidden bg-red-800 relative">
+          <div className="absolute inset-0 opacity-10"
+            style={{ backgroundImage: 'radial-gradient(circle at 70% 50%, #FCD34D 0%, transparent 60%)' }} />
+          <div className="relative p-10 md:p-14 grid md:grid-cols-3 gap-10 items-center">
+            {/* Medal icon */}
+            <div className="flex justify-center md:justify-start">
+              <div className="relative w-32 h-32">
+                <div className="w-32 h-32 rounded-full bg-amber-400/20 border-2 border-amber-400/40 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-amber-400 text-4xl mb-1">★</div>
+                    <div className="text-white/60 text-xs font-semibold tracking-widest uppercase">Vir Chakra</div>
+                  </div>
+                </div>
+                {/* Pulse rings */}
+                <div className="absolute inset-0 rounded-full border-2 border-amber-400/20 animate-ping" />
+              </div>
+            </div>
+
+            <div className="md:col-span-2">
+              <div className="text-amber-400 text-xs font-semibold tracking-[0.25em] uppercase mb-3">Founder · 1992</div>
+              <h3 style={{ fontFamily: 'Playfair Display, serif' }} className="text-white text-2xl md:text-3xl font-bold mb-4">
+                Col. Sansar Singh, <span className="text-amber-400">Vir Chakra</span> (Retd.)
               </h3>
-              <p className="text-white/80 font-inter leading-relaxed text-sm">
-                Awarded the Vir Chakra by the President of India for exemplary gallantry in the Indo-Pak War. After 30 years of distinguished military service, Colonel Singh channelled the same discipline and integrity into founding Jai Vaishno Oil Mills in 1992. The values he instilled — honesty, precision, and zero compromise — remain the backbone of every drop we produce today.
+              <p className="text-white/70 leading-relaxed text-base">
+                Decorated with the Vir Chakra by the President of India for exemplary gallantry in the Indo-Pak War. After 30 years of distinguished military service, Colonel Singh channelled the same discipline, integrity and refusal to compromise into building Jai Vaishno Oil Mills in 1992. Those founding values live in every drop we produce today.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Timeline */}
+        {/* Timeline — redesigned */}
         <div className="relative">
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#C41E1E]/50 to-transparent md:-translate-x-px" />
-          <div className="space-y-10">
+          <div className="absolute left-1/2 -translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-red-800/40 via-red-800/20 to-transparent hidden md:block" />
+          <div className="space-y-12">
             {milestones.map((m, i) => (
-              <div key={m.year} className={`reveal reveal-delay-${Math.min(i+1,5)} flex gap-8 md:gap-0 ${i%2===0?'md:flex-row':'md:flex-row-reverse'}`}>
-                <div className={`flex-1 pl-12 md:pl-0 ${i%2===0?'md:pr-14 md:text-right':'md:pl-14'}`}>
-                  <span className="text-[#C41E1E] font-playfair text-xl font-bold">{m.year}</span>
-                  <h4 className="font-playfair text-lg text-charcoal font-semibold mt-1 mb-1">{m.title}</h4>
-                  <p className="text-charcoal/50 font-inter text-sm leading-relaxed">{m.desc}</p>
+              <div key={m.year} className={`flex gap-0 md:gap-8 relative ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                <div className={`flex-1 pl-10 md:pl-0 ${i % 2 === 0 ? 'md:pr-14 md:text-right' : 'md:pl-14'} reveal reveal-delay-${Math.min(i % 3 + 1, 5)}`}>
+                  <div className={`inline-flex items-center gap-2 mb-2 ${i % 2 === 0 ? 'md:flex-row-reverse md:justify-end' : ''}`}>
+                    <span style={{ fontFamily: 'Playfair Display, serif' }} className="text-red-700 text-2xl font-bold">{m.year}</span>
+                  </div>
+                  <h4 style={{ fontFamily: 'Playfair Display, serif' }} className="text-gray-900 text-lg font-semibold mb-2">{m.title}</h4>
+                  <p className="text-gray-500 text-sm leading-relaxed max-w-sm">{m.desc}</p>
                 </div>
-                <div className="absolute left-6 md:left-1/2 md:-translate-x-1/2 w-3 h-3 bg-[#C41E1E] rounded-full border-2 border-white shadow mt-1.5" />
+
+                {/* Dot */}
+                <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 w-4 h-4 rounded-full bg-red-700 border-4 border-white shadow-lg mt-2 z-10" />
                 <div className="hidden md:block flex-1" />
               </div>
             ))}

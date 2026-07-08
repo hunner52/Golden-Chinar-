@@ -3,94 +3,113 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 export default function Hero() {
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-
-  const scrollTo = (id: string) => {
-    const el = document.querySelector(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const words = headlineRef.current?.querySelectorAll('.word');
-    words?.forEach((word, i) => {
+    const words = ref.current?.querySelectorAll('.word');
+    words?.forEach((w, i) => {
       setTimeout(() => {
-        (word as HTMLElement).style.opacity = '1';
-        (word as HTMLElement).style.transform = 'translateY(0)';
-      }, 1000 + i * 100);
+        (w as HTMLElement).style.opacity = '1';
+        (w as HTMLElement).style.transform = 'translateY(0)';
+      }, 900 + i * 80);
     });
   }, []);
 
+  const go = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Mustard field background */}
+    <section className="relative min-h-screen flex items-end overflow-hidden pt-20">
+      {/* BG */}
       <div className="absolute inset-0">
-        <Image src="/images/mustard-field.jpg" alt="Golden mustard fields" fill priority className="object-cover object-center" sizes="100vw" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#C41E1E]/85 via-[#9B1515]/70 to-[#C41E1E]/90" />
+        <Image src="/images/mustard-field.jpg" alt="Mustard fields" fill priority className="object-cover object-center scale-105" sizes="100vw" />
+        {/* Layered overlays for depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-red-950/95 via-red-900/70 to-red-800/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
+      </div>
+
+      {/* Floating badges */}
+      <div className="absolute top-1/4 right-8 md:right-16 hidden md:flex flex-col gap-3" style={{ animation: 'fadeIn 1s ease 2s both' }}>
+        {[
+          { label: 'AGMARK', sub: 'Grade 1' },
+          { label: 'FSSAI', sub: 'Certified' },
+          { label: '30+', sub: 'Years' },
+        ].map((b) => (
+          <div key={b.label} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-3 text-center">
+            <div style={{ fontFamily: 'Playfair Display, serif' }} className="text-amber-400 font-bold text-lg leading-none">{b.label}</div>
+            <div className="text-white/60 text-xs mt-1 tracking-wide uppercase">{b.sub}</div>
+          </div>
+        ))}
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-        {/* Logo mark */}
-        <div className="flex justify-center mb-8" style={{ animation: 'fadeIn 1s ease 0.5s both' }}>
-          <div className="w-20 h-20 rounded-full border-4 border-[#F5C518] overflow-hidden shadow-2xl">
-            <Image src="/images/logo-leaf.jpg" alt="Golden Chinar" width={80} height={80} className="w-full h-full object-cover" />
-          </div>
-        </div>
-
+      <div className="relative z-10 container pb-20 md:pb-28">
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-3 mb-6" style={{ animation: 'fadeIn 1s ease 0.8s both' }}>
-          <span className="h-px w-8 bg-[#F5C518]/70" />
-          <span className="text-[#F5C518] text-xs font-inter font-semibold tracking-[0.3em] uppercase">Est. 1992 · Khairthal, Rajasthan</span>
-          <span className="h-px w-8 bg-[#F5C518]/70" />
+        <div className="flex items-center gap-3 mb-6" style={{ animation: 'fadeIn 1s ease 0.5s both' }}>
+          <div className="w-8 h-8 rounded-full overflow-hidden border border-amber-400/50">
+            <Image src="/images/logo-leaf.jpg" alt="" width={32} height={32} className="w-full h-full object-cover" />
+          </div>
+          <span className="text-amber-400 text-xs font-semibold tracking-[0.25em] uppercase">Jai Vaishno Oil Mills · Est. 1992</span>
         </div>
 
         {/* Headline */}
-        <h1 ref={headlineRef} className="font-playfair text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.05] mb-6 text-white">
-          {['Crafted', 'By', 'Tradition.'].map((word, i) => (
-            <span key={i} className="word inline-block mr-[0.22em] transition-all duration-600"
-              style={{ opacity: 0, transform: 'translateY(30px)' }}>
-              {word}
+        <div ref={ref} className="mb-8">
+          <h1 style={{ fontFamily: 'Playfair Display, serif' }} className="text-white font-black leading-[1.02]" style={{ fontSize: 'clamp(3rem, 8vw, 6.5rem)', letterSpacing: '-0.02em' }}>
+            {['Crafted', 'by'].map((w, i) => (
+              <span key={i} className="word inline-block mr-4 transition-all duration-700"
+                style={{ opacity: 0, transform: 'translateY(40px)', fontFamily: 'Playfair Display, serif' }}>{w}</span>
+            ))}
+            <span className="word inline-block transition-all duration-700"
+              style={{ opacity: 0, transform: 'translateY(40px)', fontFamily: 'Playfair Display, serif', color: '#FCD34D' }}>
+              Tradition.
             </span>
-          ))}
-          <br />
-          <span className="word inline-block mr-[0.22em] transition-all duration-600"
-            style={{ opacity: 0, transform: 'translateY(30px)' }}>Trusted</span>
-          <span className="word inline-block mr-[0.22em] text-yellow-shimmer transition-all duration-600"
-            style={{ opacity: 0, transform: 'translateY(30px)' }}>For</span>
-          <span className="word inline-block text-[#F5C518] transition-all duration-600"
-            style={{ opacity: 0, transform: 'translateY(30px)' }}>Generations.</span>
-        </h1>
-
-        <p className="text-white/80 text-lg md:text-xl font-inter font-light max-w-2xl mx-auto mb-10 leading-relaxed"
-          style={{ animation: 'fadeUp 1s ease 1.8s both' }}>
-          Premium Kachi Ghani mustard oil — AGMARK Grade 1 certified, trusted by Patanjali, Modicare, Louis Dreyfus and more.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center" style={{ animation: 'fadeUp 1s ease 2.1s both' }}>
-          <button onClick={() => scrollTo('#products')} className="btn-yellow">Explore Products</button>
-          <button onClick={() => scrollTo('#contact')} className="btn-outline-white">Partner With Us</button>
+            <br />
+            {['Trusted', 'for'].map((w, i) => (
+              <span key={i} className="word inline-block mr-4 transition-all duration-700"
+                style={{ opacity: 0, transform: 'translateY(40px)', fontFamily: 'Playfair Display, serif' }}>{w}</span>
+            ))}
+            <span className="word inline-block transition-all duration-700"
+              style={{ opacity: 0, transform: 'translateY(40px)', fontFamily: 'Playfair Display, serif' }}>
+              <span className="text-yellow-shine">Generations.</span>
+            </span>
+          </h1>
         </div>
 
-        {/* Stats */}
-        <div className="mt-16 grid grid-cols-3 gap-6 max-w-lg mx-auto" style={{ animation: 'fadeIn 1s ease 2.5s both' }}>
+        <p className="text-white/65 text-lg md:text-xl font-light max-w-2xl leading-relaxed mb-10"
+          style={{ animation: 'fadeUp 1s ease 1.8s both' }}>
+          Premium Kachi Ghani mustard oil from the heart of Rajasthan. AGMARK Grade 1 certified, trusted by Patanjali, Modicare, Louis Dreyfus and more.
+        </p>
+
+        <div className="flex flex-wrap gap-4 items-center" style={{ animation: 'fadeUp 1s ease 2.1s both' }}>
+          <button onClick={() => go('#products')} className="btn-primary">Explore Products →</button>
+          <button onClick={() => go('#contact')} className="btn-ghost">Partner With Us</button>
+        </div>
+
+        {/* Bottom stats bar */}
+        <div className="mt-16 pt-8 border-t border-white/10 grid grid-cols-3 md:grid-cols-5 gap-6"
+          style={{ animation: 'fadeIn 1s ease 2.5s both' }}>
           {[
-            { num: '30+', label: 'Years of Trust' },
-            { num: '100', label: 'MT/Day Capacity' },
-            { num: '6+', label: 'Brand Clients' },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="font-playfair text-2xl md:text-3xl font-bold text-[#F5C518]">{stat.num}</div>
-              <div className="text-white/50 text-xs tracking-widest uppercase font-inter mt-1">{stat.label}</div>
+            { n: '100', u: 'MT/Day', l: 'Crushing' },
+            { n: '35', u: 'TPD', l: 'Kachi Ghani' },
+            { n: '166', u: 'Kohuls', l: 'Cold Press' },
+            { n: '500', u: 'MT', l: 'Storage' },
+            { n: '8', u: 'Lines', l: 'Packing' },
+          ].map((s) => (
+            <div key={s.l} className="text-center md:text-left">
+              <div className="flex items-baseline gap-1 justify-center md:justify-start">
+                <span style={{ fontFamily: 'Playfair Display, serif' }} className="text-2xl md:text-3xl font-bold text-white">{s.n}</span>
+                <span className="text-amber-400 text-xs font-semibold">{s.u}</span>
+              </div>
+              <div className="text-white/40 text-xs tracking-widest uppercase mt-0.5">{s.l}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={{ animation: 'fadeIn 1s ease 3s both' }}>
-        <span className="text-white/40 text-xs tracking-[0.3em] uppercase font-inter">Scroll</span>
-        <div className="w-px h-10 bg-gradient-to-b from-[#F5C518]/60 to-transparent animate-pulse" />
+      {/* Scroll cue */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" style={{ animation: 'fadeIn 1s ease 3s both' }}>
+        <div className="w-5 h-8 rounded-full border-2 border-white/30 flex items-start justify-center pt-1.5">
+          <div className="w-1 h-1.5 rounded-full bg-white/60 animate-bounce" />
+        </div>
       </div>
     </section>
   );

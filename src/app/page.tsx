@@ -5,15 +5,13 @@ import Hero from '@/components/sections/Hero';
 import Legacy from '@/components/sections/Legacy';
 import Process from '@/components/sections/Process';
 import Products from '@/components/sections/Products';
-import WhyUs from '@/components/sections/WhyUs';
 import Manufacturing from '@/components/sections/Manufacturing';
 import PrivateLabel from '@/components/sections/PrivateLabel';
 import Quality from '@/components/sections/Quality';
 import Stats from '@/components/sections/Stats';
-
 import Contact from '@/components/sections/Contact';
 
-export default function HomePage() {
+export default function Page() {
   return (
     <>
       <LoadingScreen />
@@ -21,14 +19,12 @@ export default function HomePage() {
       <main>
         <Hero />
         <Legacy />
-        <Process />
         <Products />
-        <WhyUs />
+        <Process />
         <Manufacturing />
         <PrivateLabel />
         <Quality />
         <Stats />
-
         <Contact />
       </main>
       <Footer />

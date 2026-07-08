@@ -2,60 +2,62 @@
 import { useEffect, useRef } from 'react';
 
 const steps = [
-  { number: '01', title: 'Seed Selection', desc: 'Premium black mustard from Alwar district — India\'s highest producing belt. Only Grade 1 seeds pass intake inspection.' },
-  { number: '02', title: 'Cleaning & Sorting', desc: 'Multi-stage cleaning removes impurities. Seeds graded for oil content using in-house NIR Analyser.' },
-  { number: '03', title: 'Kachi Ghani Extraction', desc: '166 cold-press Kohul machines extract oil at low temperature, preserving pungency, aroma, and nutrients.' },
-  { number: '04', title: 'Four-Stage Filtration', desc: 'Micro-filtration and polishing filters remove particles down to 2.5 microns. Crystal clarity guaranteed.' },
-  { number: '05', title: 'Quality Testing', desc: 'GLC lab tests every batch against FSSAI and AGMARK standards. Control samples archived per run.' },
-  { number: '06', title: 'Precision Packaging', desc: '8 dedicated automated lines — 200ml to 15L. Nitrogen flushed. Inkjet coded for full traceability.' },
+  { n: '01', title: 'Seed Selection', desc: "Premium black mustard from Alwar — India's highest-producing district. Only Grade 1 seeds clear intake." },
+  { n: '02', title: 'Cleaning & Sorting', desc: 'Multi-stage cleaning and NIR Analyser grading before any processing begins.' },
+  { n: '03', title: 'Kachi Ghani Extraction', desc: '166 cold-press Kohuls extract oil at low temperature — preserving pungency, aroma and nutrients.' },
+  { n: '04', title: 'Four-Stage Filtration', desc: 'Micro and polishing filters remove particles to 2.5 microns. Crystal clarity, guaranteed.' },
+  { n: '05', title: 'Quality Testing', desc: 'GLC lab tests every batch against FSSAI and AGMARK. Control samples archived per run.' },
+  { n: '06', title: 'Precision Packaging', desc: '8 automated lines — 200ml to 15L. Nitrogen flushed, inkjet coded, fully traceable.' },
 ];
 
 export default function Process() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.reveal').forEach((el, i) => {
-            setTimeout(() => el.classList.add('visible'), i * 90);
-          });
-        }
-      });
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.querySelectorAll('.reveal,.reveal-scale').forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * 80)); });
     }, { threshold: 0.05 });
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
 
   return (
-    <section id="process" ref={sectionRef} className="py-24 bg-[#C41E1E]">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-[#F5C518] text-xs font-inter font-semibold tracking-[0.3em] uppercase reveal mb-3 block">The Process</span>
-          <div className="yellow-divider mx-auto mb-5 reveal reveal-delay-1" />
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-white reveal reveal-delay-1">
-            From Seed <span className="text-[#F5C518]">To Trust.</span>
-          </h2>
-          <p className="text-white/65 font-inter mt-4 leading-relaxed reveal reveal-delay-2">
-            Every drop passes through a rigorous six-stage journey — from raw seed to sealed bottle.
+    <section id="process" ref={ref} className="section-pad bg-red-800 relative overflow-hidden">
+      {/* Decorative */}
+      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-red-700/40 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
+
+      <div className="container relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+          <div>
+            <div className="eyebrow-light reveal mb-5">The Process</div>
+            <h2 className="heading-xl text-white reveal reveal-delay-1">
+              From Seed<br /><span className="text-yellow-shine">To Trust.</span>
+            </h2>
+          </div>
+          <p className="text-white/55 max-w-xs leading-relaxed text-sm reveal reveal-delay-2">
+            Every drop travels through six rigorous stages — from raw seed to sealed, certified bottle.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {steps.map((step, i) => (
-            <div key={step.number} className={`reveal reveal-delay-${Math.min(i+1,5)} card-red p-7 group`}>
-              <div className="font-playfair text-5xl font-bold text-[#F5C518]/25 group-hover:text-[#F5C518]/50 transition-colors duration-400 mb-5">{step.number}</div>
-              <h3 className="font-playfair text-xl text-white font-semibold mb-3">{step.title}</h3>
-              <p className="text-white/60 font-inter text-sm leading-relaxed">{step.desc}</p>
+          {steps.map((s, i) => (
+            <div key={s.n} className={`reveal reveal-delay-${Math.min((i % 3) + 1, 5)} card-dark p-8 group relative overflow-hidden`}>
+              {/* Large number bg */}
+              <div style={{ fontFamily: 'Playfair Display, serif' }} className="absolute -right-4 -top-4 text-9xl font-black text-white/[0.04] select-none pointer-events-none">{s.n}</div>
+              <div className="relative">
+                <div style={{ fontFamily: 'Playfair Display, serif' }} className="text-amber-400/30 text-5xl font-black mb-5 group-hover:text-amber-400/60 transition-colors duration-400">{s.n}</div>
+                <h3 style={{ fontFamily: 'Playfair Display, serif' }} className="text-white text-xl font-semibold mb-3">{s.title}</h3>
+                <p className="text-white/55 text-sm leading-relaxed">{s.desc}</p>
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-12 text-center reveal">
-          <div className="inline-flex flex-wrap gap-3 justify-center">
-            {['AGMARK Grade 1', 'FSSAI Compliant', 'GLC Lab Tested', 'Make in India'].map((cert) => (
-              <span key={cert} className="px-5 py-2 border border-[#F5C518]/40 rounded-full text-[#F5C518] text-xs font-inter font-semibold tracking-widest uppercase">{cert}</span>
-            ))}
-          </div>
+        {/* Cert strip */}
+        <div className="mt-12 flex flex-wrap gap-3 justify-center reveal">
+          {['AGMARK Grade 1', 'FSSAI Compliant', 'GLC Lab Tested', 'NIR Verified', 'Make in India'].map(c => (
+            <span key={c} className="px-5 py-2.5 border border-amber-400/30 rounded-full text-amber-400 text-xs font-semibold tracking-widest uppercase hover:bg-amber-400/10 transition-colors duration-200">{c}</span>
+          ))}
         </div>
       </div>
     </section>
